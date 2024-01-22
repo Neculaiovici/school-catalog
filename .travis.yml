@@ -20,7 +20,13 @@ before_script:
   - mysql -e 'CREATE DATABASE school-database;'
 
 install:
-  - npm install
+  - cd school-be && pnpm install
+  - cd ../school-be && pnpm install
+  - cd school-fe && npm install
+  - cd ../school-fe && npm install
 
 script:
-  - npm run test
+  - cd school-be && pnpm run test
+  - cd ../school-be && pnpm run test
+  - cd school-fe && npm run test
+  - cd ../school-fe && npm run test
