@@ -1,4 +1,4 @@
-# School-catalog Application
+# School-management Application
 ### Description
 
 ## Docker Setup
