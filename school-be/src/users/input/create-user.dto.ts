@@ -1,6 +1,6 @@
 import { IsDate, IsEnum, IsNotEmpty, IsString, Length, ValidateNested } from "class-validator";
-import { Profile } from "../profile.entity";
-import { RoleTypeEnum } from "../role.enum";
+import { Profile } from "../entity/profile.entity";
+import { RoleTypeEnum } from "../enum/role.enum";
 import { Type } from "class-transformer";
 
 export class CreateUserDto {
@@ -24,10 +24,8 @@ export class CreateUserDto {
   @IsNotEmpty({ message: "You must select a value" })
   role: RoleTypeEnum;
 
-  @IsDate()
-  createdAt: Date;
-
   @ValidateNested()
   @Type(() => Profile)
   profile: Profile;
+  
 }

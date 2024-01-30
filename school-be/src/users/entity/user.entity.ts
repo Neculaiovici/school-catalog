@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 import { Expose } from 'class-transformer';
 import { Profile } from "./profile.entity";
 import { AbstractEntity } from "src/common/abstract.entity";
-import { RoleTypeEnum } from "./role.enum";
+import { RoleTypeEnum } from "../enum/role.enum";
 
 @Entity('user')
 export class User extends AbstractEntity {
@@ -21,7 +21,7 @@ export class User extends AbstractEntity {
   @Expose()
   role: RoleTypeEnum;
 
-  @OneToOne(() => Profile, { nullable: true })
+  @OneToOne(() => Profile, { nullable: true, cascade: true })
   @JoinColumn()
   @Expose()
   profile: Profile;

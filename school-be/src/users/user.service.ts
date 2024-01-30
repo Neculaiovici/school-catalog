@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "./user.entity";
-import { Repository } from "typeorm";
+import { User } from "./entity/user.entity";
+import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
-import * as bcrypt from "bcrypt";
+import { Profile } from "./entity/profile.entity";
+import { AuthService } from "src/auth/auth.service";
 
 @Injectable()
 export class UserService { 
@@ -12,37 +13,60 @@ export class UserService {
 
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    private readonly authService: AuthService
   ) {}
 
-  public async createUser(input: CreateUserDto): Promise<User> {
+  public async getUsersList(): Promise<User> {
+    return;
+  }
+
+  public async getUser(userId: number): Promise<User> {
+    return await this.userRepository.findOneBy({id: userId});
+  }
+
+  public async createUser(input: CreateUserDto): Promise<User | undefined> {
     const user = new User();
+    user.profile = new Profile();
+    const currentDateTimeString = new Date();
 
     if(input.password !== input.retypedPassword) throw new BadRequestException(['Password are not identical!']);
 
     const existingUsername = await this.userRepository.findOne({ where: { username: input.username }});
     if(existingUsername) throw new BadRequestException([`Username ${existingUsername.username} is already taken!`]);
 
-    //const existingEmail = await this.userRepository.findOne({ where: { email:  input.profile.email }})
-    //if(existingEmail) throw new BadRequestException([`Username ${existingUsername.username} is already taken!`]);
+    const existingEmail = await this.userRepository.findOne({ where: { profile: { email:  input.profile.email }}});
+    if(existingEmail) throw new BadRequestException([`Username ${existingUsername.username} is already taken!`]);
 
+    user.createdAt = currentDateTimeString;
     user.username = input.username;
+    user.password = await this.authService.hashPassword(input.password);
+    user.role = input.role;
 
-    return user;
+    user.profile.firstName = input.profile.firstName;
+    user.profile.lastName = input.profile.lastName;
+    user.profile.email = input.profile.email;
+    user.profile.age = input.profile.age;
+    user.profile.profileAvatar = input.profile.profileAvatar;
+    user.profile.createdAt = currentDateTimeString;
+
+    return await this.userRepository.save(user);
   }
 
-  public async getUser(userId: number): Promise<User>{
-    return await this.userRepository.findOneBy({id: userId});
+  public async updateUser(): Promise<User> {
+    return ;
   }
 
-  public async validateUser(username: string, password: string): Promise<User> {
-    const user = await await this.userRepository.findOneBy({username: username});
-
-    if(!user) throw new UnauthorizedException(`User ${username} not found!`);
-
-    if(!(await bcrypt.compare(password, user.password))) throw new UnauthorizedException(`Invalid credential for user ${username}`);
-
-    return user;
+  public async deleteUser(): Promise<User> {
+    return ;
   }
+
+  private getUsersBaseQuery(): SelectQueryBuilder<User> {
+    const userBaseQuery = this.userRepository
+      .createQueryBuilder('u')
+      .orderBy('u.id', 'ASC')
+    return userBaseQuery;
+  }
+  
 
 }

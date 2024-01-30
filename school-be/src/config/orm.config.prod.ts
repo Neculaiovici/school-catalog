@@ -1,8 +1,7 @@
 import { registerAs } from "@nestjs/config";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { AbstractEntity } from "src/common/abstract.entity";
-import { Profile } from "src/users/profile.entity";
-import { User } from "src/users/user.entity";
+import { Profile } from "src/users/entity/profile.entity";
+import { User } from "src/users/entity/user.entity";
 
 export default registerAs('orm.config', (): TypeOrmModuleOptions => ({
   type: 'mysql',
