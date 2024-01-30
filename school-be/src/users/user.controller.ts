@@ -1,11 +1,11 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Patch, Post, SerializeOptions, UseInterceptors } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, SerializeOptions, UseInterceptors } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./input/create-user.dto";
-import { User } from "./user.entity";
 
 @Controller('user')
 @SerializeOptions({strategy: 'excludeAll'})
 export class UserController {
+
   constructor(private readonly userService: UserService) {}
 
   @Get()
@@ -16,12 +16,12 @@ export class UserController {
 
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
-  async findOne() {
-
+  async findOne(@Param('id', ParseIntPipe) userId: number) {
+    return await this.userService.getUser(userId);
   }
 
   @Post()
-  async create(@Body() input: CreateUserDto, user: User) {
+  async create(@Body() input: CreateUserDto) {
     return await this.userService.createUser(input)
   }
 
