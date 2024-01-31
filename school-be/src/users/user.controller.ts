@@ -17,20 +17,23 @@ export class UserController {
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   async findOne(@Param('id', ParseIntPipe) userId: number) {
-    return await this.userService.getUser(userId);
+    return await this.userService.getUserById(userId);
   }
 
   @Post()
+  @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() input: CreateUserDto) {
     return await this.userService.createUser(input)
   }
 
   @Patch()
+  @UseInterceptors(ClassSerializerInterceptor)
   async update() {
 
   }
 
   @Delete()
+  @UseInterceptors(ClassSerializerInterceptor)
   async delete() {
 
   }
