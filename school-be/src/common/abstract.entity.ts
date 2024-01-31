@@ -7,5 +7,6 @@ export class AbstractEntity {
   id: number;
 
   @Column()
+  @Expose()
   createdAt: Date;
 }

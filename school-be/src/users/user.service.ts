@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entity/user.entity";
-import { Repository, SelectQueryBuilder } from "typeorm";
+import { Repository } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
 import { Profile } from "./entity/profile.entity";
-import { AuthService } from "src/auth/auth.service";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService { 
@@ -14,15 +14,18 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly authService: AuthService
   ) {}
 
   public async getUsersList(): Promise<User> {
     return;
   }
 
-  public async getUser(userId: number): Promise<User> {
-    return await this.userRepository.findOneBy({id: userId});
+  public async getUserById(userId: number): Promise<User> {
+    return await this.userRepository.findOne({where: {id: userId}});
+  }
+
+  public async getUserByUsername(userName: string): Promise<User> {    
+    return await this.userRepository.findOneBy({username: userName});
   }
 
   public async createUser(input: CreateUserDto): Promise<User | undefined> {
@@ -40,7 +43,7 @@ export class UserService {
 
     user.createdAt = currentDateTimeString;
     user.username = input.username;
-    user.password = await this.authService.hashPassword(input.password);
+    user.password = await this.hashPassword(input.password);
     user.role = input.role;
 
     user.profile.firstName = input.profile.firstName;
@@ -50,7 +53,9 @@ export class UserService {
     user.profile.profileAvatar = input.profile.profileAvatar;
     user.profile.createdAt = currentDateTimeString;
 
-    return await this.userRepository.save(user);
+    return {
+      ...(await this.userRepository.save(user))
+    }
   }
 
   public async updateUser(): Promise<User> {
@@ -61,12 +66,8 @@ export class UserService {
     return ;
   }
 
-  private getUsersBaseQuery(): SelectQueryBuilder<User> {
-    const userBaseQuery = this.userRepository
-      .createQueryBuilder('u')
-      .orderBy('u.id', 'ASC')
-    return userBaseQuery;
+  private async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
   }
-  
 
 }
