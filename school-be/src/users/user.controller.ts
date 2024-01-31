@@ -1,6 +1,7 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, SerializeOptions, UseInterceptors } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, SerializeOptions, UseGuards, UseInterceptors } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./input/create-user.dto";
+import JwtAuthGuard from "src/auth/guard/jwt-auth.guard";
 
 @Controller('user')
 @SerializeOptions({strategy: 'excludeAll'})
@@ -15,6 +16,7 @@ export class UserController {
   }
 
   @Get('/:id')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async findOne(@Param('id', ParseIntPipe) userId: number) {
     return await this.userService.getUserById(userId);
