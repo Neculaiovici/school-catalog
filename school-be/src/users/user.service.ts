@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entity/user.entity";
-import { Repository } from "typeorm";
+import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
 import { Profile } from "./entity/profile.entity";
 import * as bcrypt from "bcrypt";
@@ -16,8 +16,8 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public async getUsersList(): Promise<User> {
-    return;
+  public async getAllUsers(): Promise<User[]> {
+    return this.baseQuery().getMany();
   }
 
   public async getUserById(userId: number): Promise<User> {
@@ -64,6 +64,13 @@ export class UserService {
 
   public async deleteUser(): Promise<User> {
     return ;
+  }
+
+  public baseQuery(): SelectQueryBuilder<User> {
+    const userQuery = this.userRepository
+      .createQueryBuilder('u')
+      .orderBy('u.id', 'ASC')
+    return userQuery
   }
 
   private async hashPassword(password: string): Promise<string> {
