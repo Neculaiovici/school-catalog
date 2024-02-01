@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Expose } from 'class-transformer';
 import { ProfileEntity } from "./profile.entity";
 import { AbstractEntity } from "src/common/abstract.entity";
 import { RoleTypeEnum } from "../enum/role.enum";
 import { ClassroomEntity } from "src/classroom/entity/classroom.entity";
+import { GradeEntity } from "src/classroom/entity/grade.entity";
 
 @Entity('user')
 export class UserEntity extends AbstractEntity {
@@ -26,6 +27,10 @@ export class UserEntity extends AbstractEntity {
   @JoinColumn()
   @Expose()
   profile: ProfileEntity;
+
+  @ManyToMany(() => GradeEntity, (grade) => grade.id)
+  @Expose()
+  grade: GradeEntity[];
 
   @ManyToMany(() => ClassroomEntity, (classroom) => classroom.users)
   classrooms: ClassroomEntity[];
