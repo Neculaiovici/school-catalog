@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="header">
+    <h2>{{ pageLabel }}</h2>
+  </div>
+  <div class="register-form">
+    <mat-form-field apperance="outline">
+      <mat-label>Username</mat-label>
+      <input type="text" matInput required/>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="username.invalid"> {{ getUsernameErrorMessage() }} </mat-error>
+    </mat-form-field>
+    <mat-form-field apperance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput required />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error *ngIf="password.invalid"> {{ getPasswordErrorMessage() }} </mat-error>
+    </mat-form-field>
+    <button mat-raised-button (click)="onSubmit()" color="primary"> {{ submitLabel }} </button>
+  </div>
+</div>

@@ -1,13 +1,10 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>My App</span>
+  <span>School application</span>
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
+    <a routerLink="auth/login"><mat-icon>login</mat-icon></a>
   </button>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+    <a routerLink="auth/sign-up"><mat-icon>how_to_reg</mat-icon></a>
   </button>
 </mat-toolbar>
