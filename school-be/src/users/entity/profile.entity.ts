@@ -3,7 +3,7 @@ import { AbstractEntity } from "src/common/abstract.entity";
 import { Column, Entity } from "typeorm";
 
 @Entity('profile')
-export class Profile extends AbstractEntity {
+export class ProfileEntity extends AbstractEntity {
 
   @Column()
   @Expose()

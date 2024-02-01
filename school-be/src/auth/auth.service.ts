@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { User } from "src/users/entity/user.entity";
+import { UserEntity } from "src/users/entity/user.entity";
 import { Response } from 'express';
 import * as bcrypt from "bcrypt";
 import { TokenPayload } from "./interface/token-payload.interface";
@@ -15,7 +15,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  public async login(user: User, response: Response) {
+  public async login(user: UserEntity, response: Response) {
     const userObject = await this.userService.getUserByUsername(user.username);
     
     const tokenPayload: TokenPayload = {

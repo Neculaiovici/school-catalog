@@ -7,6 +7,7 @@ import { UserModule } from './users/user.module';
 import ormConfig from './config/orm.config';
 import ormConfigProd from './config/orm.config.prod';
 import { AuthModule } from './auth/auth.module';
+import { ClassroomModule } from './classroom/classroom.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { AuthModule } from './auth/auth.module';
       useFactory: process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    ClassroomModule
   ],
   controllers: [AppController],
   providers: [AppService],

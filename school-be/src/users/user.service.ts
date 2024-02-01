@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "./entity/user.entity";
+import { UserEntity } from "./entity/user.entity";
 import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
-import { Profile } from "./entity/profile.entity";
+import { ProfileEntity } from "./entity/profile.entity";
 import * as bcrypt from "bcrypt";
 
 @Injectable()
@@ -12,25 +12,25 @@ export class UserService {
   protected readonly logger = new Logger(UserService.name);
 
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  public async getAllUsers(): Promise<User[]> {
+  public async getAllUsers(): Promise<UserEntity[]> {
     return this.baseQuery().getMany();
   }
 
-  public async getUserById(userId: number): Promise<User> {
+  public async getUserById(userId: number): Promise<UserEntity> {
     return await this.userRepository.findOne({where: {id: userId}});
   }
 
-  public async getUserByUsername(userName: string): Promise<User> {    
+  public async getUserByUsername(userName: string): Promise<UserEntity> {    
     return await this.userRepository.findOneBy({username: userName});
   }
 
-  public async createUser(input: CreateUserDto): Promise<User | undefined> {
-    const user = new User();
-    user.profile = new Profile();
+  public async createUser(input: CreateUserDto): Promise<UserEntity | undefined> {
+    const user = new UserEntity();
+    user.profile = new ProfileEntity();
     const currentDateTimeString = new Date();
 
     if(input.password !== input.retypedPassword) throw new BadRequestException(['Password are not identical!']);
@@ -58,15 +58,15 @@ export class UserService {
     }
   }
 
-  public async updateUser(): Promise<User> {
+  public async updateUser(): Promise<UserEntity> {
     return ;
   }
 
-  public async deleteUser(): Promise<User> {
+  public async deleteUser(): Promise<UserEntity> {
     return ;
   }
 
-  public baseQuery(): SelectQueryBuilder<User> {
+  public baseQuery(): SelectQueryBuilder<UserEntity> {
     const userQuery = this.userRepository
       .createQueryBuilder('u')
       .orderBy('u.id', 'ASC')
