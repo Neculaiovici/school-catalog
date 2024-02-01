@@ -1,5 +1,5 @@
 import { IsDate, IsEnum, IsNotEmpty, IsString, Length, ValidateNested } from "class-validator";
-import { Profile } from "../entity/profile.entity";
+import { ProfileEntity } from "../entity/profile.entity";
 import { RoleTypeEnum } from "../enum/role.enum";
 import { Type } from "class-transformer";
 
@@ -25,7 +25,7 @@ export class CreateUserDto {
   role: RoleTypeEnum;
 
   @ValidateNested()
-  @Type(() => Profile)
-  profile: Profile;
+  @Type(() => ProfileEntity)
+  profile: ProfileEntity;
   
 }

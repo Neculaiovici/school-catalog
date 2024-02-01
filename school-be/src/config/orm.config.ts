@@ -1,7 +1,8 @@
 import { registerAs } from "@nestjs/config";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { Profile } from "src/users/entity/profile.entity";
-import { User } from "src/users/entity/user.entity";
+import { ClassroomEntity } from "src/classroom/entity/classroom.entity";
+import { ProfileEntity } from "src/users/entity/profile.entity";
+import { UserEntity } from "src/users/entity/user.entity";
 
 export default registerAs('orm.config', (): TypeOrmModuleOptions => ({
   type: 'mysql',
@@ -10,7 +11,7 @@ export default registerAs('orm.config', (): TypeOrmModuleOptions => ({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [ User, Profile ],
+  entities: [ UserEntity, ProfileEntity, ClassroomEntity ],
   synchronize: true,
   autoLoadEntities: false,
   logging: false

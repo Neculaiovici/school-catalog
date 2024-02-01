@@ -1,11 +1,12 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Expose } from 'class-transformer';
-import { Profile } from "./profile.entity";
+import { ProfileEntity } from "./profile.entity";
 import { AbstractEntity } from "src/common/abstract.entity";
 import { RoleTypeEnum } from "../enum/role.enum";
+import { ClassroomEntity } from "src/classroom/entity/classroom.entity";
 
 @Entity('user')
-export class User extends AbstractEntity {
+export class UserEntity extends AbstractEntity {
 
   @Column({ unique: true })
   @Expose()
@@ -21,9 +22,12 @@ export class User extends AbstractEntity {
   @Expose()
   role: RoleTypeEnum;
 
-  @OneToOne(() => Profile, { nullable: true, cascade: true })
+  @OneToOne(() => ProfileEntity, { nullable: true, cascade: true })
   @JoinColumn()
   @Expose()
-  profile: Profile;
+  profile: ProfileEntity;
+
+  @ManyToMany(() => ClassroomEntity, (classroom) => classroom.users)
+  classrooms: ClassroomEntity[];
 
 }
