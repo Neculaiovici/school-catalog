@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { UserInterface } from '../common/model/user.interface';
+import { User } from '../common/model/user';
+import { AuthService } from './auth.services';
 
 @Component({
   selector: 'app-auth',
@@ -12,13 +13,14 @@ export class AuthComponent implements OnInit {
   public username = new FormControl('', [Validators.required]);
   public password = new FormControl('', [Validators.required]);
 
-  @Output() onSubmitEvent = new EventEmitter<UserInterface>();
+  @Output() onSubmitEvent = new EventEmitter<User>();
   @Input() submitLabel: string | undefined;
   @Input() pageLabel: string | undefined;
 
-  constructor() { }
+  constructor(private readonly authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe() // for test be
   }
 
   public getUsernameErrorMessage() {
@@ -35,7 +37,7 @@ export class AuthComponent implements OnInit {
     return '';
   }
 
-  public onSubmit(user:UserInterface) {
+  public onSubmit() {
     this.onSubmitEvent.emit({
       username: this.username.value,
       password: this.password.value

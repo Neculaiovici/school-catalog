@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.services';
 import { Router } from '@angular/router';
-import { UserInterface } from 'src/app/common/model/user.interface';
+import { User } from 'src/app/common/model/user';
 import { AuthComponent } from '../auth.component';
 
 @Component({
@@ -15,10 +15,7 @@ export class LoginComponent implements OnInit {
   public pageLabel: string = "Login page";
   public submitButtonLabel: string = "Login";
 
-  public usernameFormControl = new FormControl('', Validators.required);
-  public passwordFormControl = new FormControl('', Validators.required);
-
-  @Output() onSubmitEvent = new EventEmitter<UserInterface>();
+  @Output() onSubmitEvent = new EventEmitter<User>();
   @ViewChild(AuthComponent) authComponent: AuthComponent | undefined;
 
   constructor(
@@ -28,19 +25,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  public login(users:UserInterface) {
-    const user: UserInterface = {
-      username: this.usernameFormControl.value,
-      password: this.passwordFormControl.value,
-    };
-
+  login(user: User) {
     this.authService.login(user).subscribe(() => {
-      // Apelează metoda onSubmit din app-auth
-      if (this.authComponent) {
-        this.authComponent.onSubmit(user);
-      }
-      this.router.navigate(['']);
-    });
+      this.router.navigate([''])
+    })
   }
 
 }

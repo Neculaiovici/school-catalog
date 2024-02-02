@@ -2,14 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject, catchError, of, tap } from "rxjs";
-import { UserInterface } from "../common/model/user.interface";
+import { User } from "../common/model/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3200/auth'
+  private apiUrl = 'http://localhost:3000'
   private readonly authenticated = new Subject<boolean>();
   private authenticated$ = this.authenticated.asObservable();
 
@@ -27,15 +27,19 @@ export class AuthService {
     );
   }
 
-  public login(user: UserInterface) {
-    return this.httpClient.post<UserInterface>(`${this.apiUrl}/login`, user);
+  public login(user: User) {
+    return this.httpClient.post<User>(`${this.apiUrl}/auth/login`, {user});
   }
 
   public logout() {
-    this.httpClient.post(`${this.apiUrl}/logout`, {}).subscribe(() => {
+    this.httpClient.post(`${this.apiUrl}/auth/logout`, {}).subscribe(() => {
       this.authenticated.next(false);
       this.router.navigate(['/login']);
     });
+  }
+
+  public getUser(id: number) {
+    return this.httpClient.get(`${this.apiUrl}/user/${id}`);
   }
 
 }
