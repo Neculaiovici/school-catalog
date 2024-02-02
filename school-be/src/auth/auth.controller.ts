@@ -21,8 +21,7 @@ export class AuthController {
   @UseInterceptors(ClassSerializerInterceptor)
   public async login(@CurrentUser() user: UserEntity, @Res({ passthrough: true }) response: Response) {
     await this.authService.login(user, response);
-    //response.send(user);
-    response.json({message: 'Authentication successful!'})
+    response.send(user);
   }
   
   @UseGuards(JwtAuthGuard)

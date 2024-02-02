@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   public login(user: User) {
-    return this.httpClient.post<User>(`${this.apiUrl}/auth/login`, {user});
+    return this.httpClient.post<User>(`${this.apiUrl}/auth/login`, {user}, { withCredentials: true });
   }
 
   public logout() {

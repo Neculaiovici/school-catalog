@@ -16,24 +16,30 @@ export class AuthService {
   ) {}
 
   public async login(user: UserEntity, response: Response) {
-    const userObject = await this.userService.getUserByUsername(user.username);
+    try {
+      const userObject = await this.userService.getUserByUsername(user.username);
     
-    const tokenPayload: TokenPayload = {
-      sub: userObject.id,
-      name: userObject.username
+      const tokenPayload: TokenPayload = {
+        sub: userObject.id,
+        name: userObject.username
+      }
+
+      const expires = new Date();
+      expires.setSeconds(expires.getSeconds() + this.configService.get('JWT_EXPIRATION'));
+
+      const token = this.jwtService.sign(tokenPayload)
+
+      response.cookie('Authentication', token, {
+        httpOnly: true,
+        secure: true,
+        expires,
+        sameSite: 'none'
+      })
+    } catch(error) {
+      console.error('Eroare la utentificare ', error.message);
+      throw new UnauthorizedException('Autentificare eșuată. Verificați datele de autentificare.')
     }
-
-    const expires = new Date();
-    expires.setSeconds(expires.getSeconds() + this.configService.get('JWT_EXPIRATION'));
-
     
-
-    const token = this.jwtService.sign(tokenPayload)
-
-    response.cookie('Authentication', token, {
-      httpOnly: true,
-      expires
-    })
   }
 
   public logout(response: Response) {
@@ -42,18 +48,6 @@ export class AuthService {
       httpOnly: true,
       expires: new Date(0)
     });
-  }
-
-  public async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.getUserByUsername(username);
-
-    if(!user) throw new UnauthorizedException(`User ${username} not found!`);
-
-    if(!(await bcrypt.compare(pass, user.password))) throw new UnauthorizedException(`Invalid credential for user ${username}`);
-
-    const {password, ...result } = user;
-
-    return result;
   }
 
 }

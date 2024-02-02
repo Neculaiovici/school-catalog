@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.services';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/common/model/user';
 import { AuthComponent } from '../auth.component';
