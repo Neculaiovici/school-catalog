@@ -1,1 +1,12 @@
-<p>sign-up works!</p>
+<app-auth 
+  (onSubmitEvent)="registerUser($event)" 
+  [pageLabel]="pageLabel" 
+  [submitLabel]="submitButtonLabel"
+  [showRetypePassword]="true"
+  [showRole]="true"
+  [showFirstName]="true"
+  [showLastName]="true"
+  [showEmail]="true"
+  [showAge]="true"
+  [showProfileAvatar]="true">
+</app-auth>

@@ -38,6 +38,10 @@ export class AuthService {
     });
   }
 
+  public registerUser(user: User) {
+    return this.httpClient.post<User>(`${this.apiUrl}/user`, {user}, { withCredentials: true })
+  }
+
   public getUser(id: number) {
     return this.httpClient.get(`${this.apiUrl}/user/${id}`);
   }
