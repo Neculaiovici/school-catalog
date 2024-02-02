@@ -9,11 +9,12 @@ async function bootstrap() {
   const expressApp = new ExpressAdapter();
   expressApp.enableCors({
     origin: 'http://localhost:4200', // Angular address
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  const app = await NestFactory.create(AppModule, expressApp);
+  //app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
 

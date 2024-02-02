@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { User } from '../common/model/user';
-import { AuthService } from './auth.services';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',

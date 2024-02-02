@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "./entity/user.entity";
 import { Repository, SelectQueryBuilder } from "typeorm";
@@ -64,6 +64,18 @@ export class UserService {
 
   public async deleteUser(): Promise<UserEntity> {
     return ;
+  }
+
+  public async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.userRepository.findOne({where: {username: username}});
+
+    if(!user) throw new UnauthorizedException(`User ${username} not found!`);
+
+    if(!(await bcrypt.compare(pass, user.password))) throw new UnauthorizedException(`Invalid credential for user ${username}`);
+
+    const {password, ...result } = user;
+
+    return result;
   }
 
   public baseQuery(): SelectQueryBuilder<UserEntity> {
