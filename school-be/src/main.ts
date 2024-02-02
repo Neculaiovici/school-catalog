@@ -14,7 +14,6 @@ async function bootstrap() {
     credentials: true,
   });
   const app = await NestFactory.create(AppModule, expressApp);
-  //app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
 

@@ -29,7 +29,7 @@ export class UserController {
   }
 
   @Post()
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() input: CreateUserDto) {
     return await this.userService.createUser(input)

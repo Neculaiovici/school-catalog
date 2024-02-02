@@ -15,6 +15,49 @@
       <mat-icon matSuffix>lock</mat-icon>
       <mat-error *ngIf="password.invalid"> {{ getPasswordErrorMessage() }} </mat-error>
     </mat-form-field>
+
+    <mat-form-field *ngIf="showRetypePassword" apperance="outline">
+      <mat-label>Retype password</mat-label>
+      <input type="text" matInput [formControl]="retypePassword" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showRole" apperance="outline">
+      <mat-label>Role</mat-label>
+      <input type="text" matInput [formControl]="role" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showFirstName" apperance="outline">
+      <mat-label>Firstname</mat-label>
+      <input type="text" matInput [formControl]="firstName" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showLastName" apperance="outline">
+      <mat-label>LastName</mat-label>
+      <input type="text" matInput [formControl]="lastName" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showEmail" apperance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="email" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showAge" apperance="outline">
+      <mat-label>Age</mat-label>
+      <input type="number" matInput [formControl]="age" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="showProfileAvatar" apperance="outline">
+      <mat-label>Avatar</mat-label>
+      <input type="text" matInput [formControl]="profileAvatar" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
     <button mat-raised-button (click)="onSubmit()" color="primary"> {{ submitLabel }} </button>
   </div>
 </div>
