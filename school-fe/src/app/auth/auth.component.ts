@@ -56,6 +56,7 @@ export class AuthComponent implements OnInit {
 
   public onSubmit() {
     const user: User = {
+      createdAt: new Date(),
       username: this.username.value,
       password: this.password.value,
       role: this.role.value,

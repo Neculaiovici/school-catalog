@@ -16,7 +16,7 @@ export class AuthController {
       private readonly authService: AuthService
     ) {}
 
-  //@UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   @UseInterceptors(ClassSerializerInterceptor)
   public async login(@CurrentUser() user: UserEntity, @Res({ passthrough: true }) response: Response) {
