@@ -1,8 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { UserInterface } from '../common/model/user.interface';
-import { AuthService } from './auth.service';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { UserInterface } from '../model/user.interface';
 import { Router } from '@angular/router';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { RoleEnum } from '../enum/role.enum';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-auth',
@@ -10,17 +18,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-
+  public hide = true;
   public username = new FormControl('', [Validators.required]);
   public password = new FormControl('', [Validators.required]);
   //create user input
   public retypedPassword = new FormControl('', [Validators.required]);
   public role = new FormControl('', [Validators.required]);
+  public roleKeys = Object.keys(RoleEnum).filter((k: any) => !isNaN(Number(RoleEnum[k])));
+  public roleEnum: any = RoleEnum;
   public firstname = new FormControl
   public lastname = new FormControl('', [Validators.required]);
   public email = new FormControl('', [Validators.required]);
   public age = new FormControl('', [Validators.required]);
   public profileAvatar = new FormControl('', [Validators.required]);
+
+
+  matcher = new MyErrorStateMatcher();
+
 
   @Output() onSubmitEvent = new EventEmitter<UserInterface>();
   @Input() submitLabel: string | undefined;
