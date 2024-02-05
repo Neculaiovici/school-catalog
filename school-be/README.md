@@ -46,3 +46,13 @@ $ pnpm run test:e2e
 # test coverage
 $ pnpm run test:cov
 ```
+
+## Docker Setup
+<p align="center">
+  <a href="https://www.docker.com/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Docker_%28container_engine%29_logo_%28cropped%29.png" width="200" alt="Docker Logo" /></a>
+</p>
+
+# Installation
+```
+$ docker-compose up -d
+```

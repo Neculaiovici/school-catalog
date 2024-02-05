@@ -18,15 +18,12 @@ env:
 
 before_script:
   - mysql -e 'CREATE DATABASE school-database;'
+  - sleep 5
 
 install:
   - cd school-be && pnpm install
-  - cd ../school-be && pnpm install
-  - cd school-fe && npm install
   - cd ../school-fe && npm install
 
 script:
   - cd school-be && pnpm run test
-  - cd ../school-be && pnpm run test
-  - cd school-fe && npm run test
   - cd ../school-fe && npm run test
