@@ -8,9 +8,8 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'school-fe';
-  constructor(private readonly authService: AuthService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.authService.getUser(1).subscribe((resp) => {console.log(resp)})
   }
 }

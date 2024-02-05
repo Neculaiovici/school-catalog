@@ -15,6 +15,6 @@ export default registerAs('orm.config', (): TypeOrmModuleOptions => ({
   database: process.env.DB_DATABASE,
   entities: [ UserEntity, ProfileEntity, ClassroomEntity, GradeEntity, CourseEntity ],
   synchronize: true,
-  autoLoadEntities: false,
+  autoLoadEntities: true,
   logging: false
 }));

@@ -7,11 +7,11 @@ export class ProfileEntity extends AbstractEntity {
 
   @Column()
   @Expose()
-  firstName: string;
+  firstname: string;
 
   @Column()
   @Expose()
-  lastName: string;
+  lastname: string;
   
   @Column({ unique: true })
   @Expose()

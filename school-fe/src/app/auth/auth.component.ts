@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { User } from '../common/model/user';
+import { UserInterface } from '../common/model/user.interface';
 import { AuthService } from './auth.service';
-import { Profile } from '../common/model/profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -14,15 +14,15 @@ export class AuthComponent implements OnInit {
   public username = new FormControl('', [Validators.required]);
   public password = new FormControl('', [Validators.required]);
   //create user input
-  public retypePassword = new FormControl('', [Validators.required]);
+  public retypedPassword = new FormControl('', [Validators.required]);
   public role = new FormControl('', [Validators.required]);
-  public firstName = new FormControl
-  public lastName = new FormControl('', [Validators.required]);
+  public firstname = new FormControl
+  public lastname = new FormControl('', [Validators.required]);
   public email = new FormControl('', [Validators.required]);
   public age = new FormControl('', [Validators.required]);
   public profileAvatar = new FormControl('', [Validators.required]);
 
-  @Output() onSubmitEvent = new EventEmitter<User>();
+  @Output() onSubmitEvent = new EventEmitter<UserInterface>();
   @Input() submitLabel: string | undefined;
   @Input() pageLabel: string | undefined;
 
@@ -34,11 +34,9 @@ export class AuthComponent implements OnInit {
   @Input() showAge = false;
   @Input() showProfileAvatar = false;
 
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly router: Router) { }
 
-  ngOnInit(): void {
-    this.authService.isAuthenticated().subscribe() // for test be
-  }
+  ngOnInit(): void { }
 
   public getUsernameErrorMessage() {
     if(this.username.hasError('required')){
@@ -55,21 +53,28 @@ export class AuthComponent implements OnInit {
   }
 
   public onSubmit() {
-    const user: User = {
-      createdAt: new Date(),
-      username: this.username.value,
-      password: this.password.value,
-      role: this.role.value,
-      profile: {
-        firstName: this.firstName.value,
-        lastName: this.lastName.value,
-        email: this.email.value,
-        age: this.age.value,
-        profileAvatar: this.profileAvatar.value
-      }
+    
+    if(this.router.url === '/auth/login') {
+      this.onSubmitEvent.emit({
+        username: this.username.value,
+        password: this.password.value
+      })
     }
-
-    console.log(user);
-    this.onSubmitEvent.emit(user)
+    else {
+      this.onSubmitEvent.emit({
+        username: this.username.value,
+        password: this.password.value,
+        retypedPassword: this.retypedPassword.value,
+        role: this.role.value,
+        profile: {
+          firstname: this.firstname.value,
+          lastname: this.lastname.value,
+          email: this.email.value,
+          age: this.age.value,
+          profileAvatar: this.profileAvatar.value
+        }
+      })
+    }
+    
   }
 }

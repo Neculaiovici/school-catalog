@@ -13,6 +13,7 @@ import { NavigationComponent } from './common/navigation/navigation.component';
 import { HomeComponent } from './pages/home/home.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptor } from './interceptor/token.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { HttpRequestInterceptor } from './interceptor/token.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatToolbarModule, MatButtonModule, MatIconModule
+    MatToolbarModule, MatButtonModule, MatIconModule, MatSnackBarModule
   ],
   providers: [ [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}] ],
   bootstrap: [AppComponent]
