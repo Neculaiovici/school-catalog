@@ -7,7 +7,6 @@ export class CreateUserDto {
 
   // @IsString()
   // @IsNotEmpty({ message: "You must enter a value" })
-  // @Length(5, 255, { message: "You must enter a value with at least 5 character" })
   username: string;
 
   // @IsString()
