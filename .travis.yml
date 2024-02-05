@@ -21,6 +21,7 @@ before_script:
   - sleep 5
 
 install:
+  - npm install -g pnpm
   - cd school-be && pnpm install
   - cd ../school-fe && npm install
 
