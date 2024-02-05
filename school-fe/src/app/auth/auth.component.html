@@ -11,21 +11,24 @@
     </mat-form-field>
     <mat-form-field apperance="outline">
       <mat-label>Password</mat-label>
-      <input type="password" matInput [formControl]="password" required />
-      <mat-icon matSuffix>lock</mat-icon>
+      <input [type]="hide ? 'password' : 'text'" matInput [formControl]="password" required />
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="password.invalid"> {{ getPasswordErrorMessage() }} </mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="showRetypePassword" apperance="outline">
       <mat-label>Retype password</mat-label>
-      <input type="text" matInput [formControl]="retypedPassword" required />
-      <mat-icon matSuffix>person</mat-icon>
+      <input [type]="hide ? 'password' : 'text'"  matInput [formControl]="retypedPassword" required />
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </mat-form-field>
 
-    <mat-form-field *ngIf="showRole" apperance="outline">
-      <mat-label>Role</mat-label>
-      <input type="text" matInput [formControl]="role" required />
-      <mat-icon matSuffix>person</mat-icon>
+    <mat-form-field class="demo-full-width" *ngIf="showRole" apperance="outline">
+      <mat-label>Choose role</mat-label>
+      <mat-select [formControl]="role" [errorStateMatcher]="matcher">
+        <mat-option *ngFor="let roleKey of roleKeys" [value]="roleEnum[roleKey]">
+          {{ roleKey }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field *ngIf="showFirstName" apperance="outline">

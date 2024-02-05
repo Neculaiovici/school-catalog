@@ -1,4 +1,4 @@
-import { ProfileInterface } from "../../model/profile.interface";
+import { ProfileInterface } from "./profile.interface";
 
 export interface UserInterface {
   username?: string;

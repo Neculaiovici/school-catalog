@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInterface } from 'src/app/common/model/user.interface';
+import { UserInterface } from 'src/app/model/user.interface';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 

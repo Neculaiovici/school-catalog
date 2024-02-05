@@ -2,9 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subject, catchError, of, tap, throwError } from "rxjs";
-import { UserInterface } from "../common/model/user.interface";
+import { UserInterface } from "../model/user.interface";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
-import { LoginResponseInterface } from "../common/model/login-response.interface";
+import { LoginResponseInterface } from "../model/login-response.interface";
 
 export const snackBarSuccessConfig: MatSnackBarConfig = {
   duration: 5500,
@@ -49,7 +49,7 @@ export class AuthService {
 
   public login(user: UserInterface): Observable<LoginResponseInterface> {
     return this.httpClient.post<LoginResponseInterface>(`${this.apiUrl}/auth/login`, user).pipe(
-      tap(() => this.snackbar.open('Login successfull', 'Close', snackBarSuccessConfig)),
+      tap(() => this.snackbar.open('Login successfull!', 'Close', snackBarSuccessConfig)),
       catchError(e => {
         this.snackbar.open(`${e.error.message} for username "${user.username}"`, 'Close', snackBarErrorConfig);
         return throwError(e);
@@ -58,7 +58,11 @@ export class AuthService {
   }
 
   public logout() {
-    this.httpClient.post(`${this.apiUrl}/auth/logout`, {}).subscribe(() => {
+    this.httpClient.post(`${this.apiUrl}/auth/logout`, {})
+    .pipe(
+      tap(() => this.snackbar.open('Logout successfull!', 'Close', snackBarSuccessConfig))
+    )
+    .subscribe(() => {
       this.authenticated.next(false);
       this.router.navigate(['/login']);
     });

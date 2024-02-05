@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { UserInterface } from 'src/app/common/model/user.interface';
+import { UserInterface } from 'src/app/model/user.interface';
 import { AuthComponent } from '../auth.component';
 
 @Component({
