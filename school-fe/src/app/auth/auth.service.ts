@@ -6,11 +6,18 @@ import { UserInterface } from "../common/model/user.interface";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { LoginResponseInterface } from "../common/model/login-response.interface";
 
-export const snackBarConfig: MatSnackBarConfig = {
+export const snackBarSuccessConfig: MatSnackBarConfig = {
   duration: 5500,
   horizontalPosition: "center",
   verticalPosition: "bottom",
-  panelClass: ['blue-snackbar']
+  panelClass: ['succsess-snackbar']
+}
+
+export const snackBarErrorConfig: MatSnackBarConfig = {
+  duration: 5500,
+  horizontalPosition: "center",
+  verticalPosition: "bottom",
+  panelClass: ['error-snackbar']
 }
 
 @Injectable({
@@ -28,20 +35,23 @@ export class AuthService {
     private readonly snackbar: MatSnackBar
     ) {}
 
-  isAuthenticated() {
-    return this.httpClient.get<boolean>(this.apiUrl).pipe(
+  isAuthenticated(): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.apiUrl}/auth`).pipe(
       tap(() => {
         this.authenticated.next(true);
       }),
-      catchError(() => of(false))
+      catchError(e => {
+        of(false);
+        return throwError(e.error.message);
+      })
     );
   }
 
   public login(user: UserInterface): Observable<LoginResponseInterface> {
     return this.httpClient.post<LoginResponseInterface>(`${this.apiUrl}/auth/login`, user).pipe(
-      tap(() => this.snackbar.open('Login successfull', 'Close', snackBarConfig)),
+      tap(() => this.snackbar.open('Login successfull', 'Close', snackBarSuccessConfig)),
       catchError(e => {
-        this.snackbar.open(`${e.error.message} for username "${user.username}"`, 'Close', snackBarConfig);
+        this.snackbar.open(`${e.error.message} for username "${user.username}"`, 'Close', snackBarErrorConfig);
         return throwError(e);
       }) 
     )
@@ -56,16 +66,12 @@ export class AuthService {
 
   public registerUser(user: UserInterface): Observable<UserInterface> {
     return this.httpClient.post<UserInterface>(`${this.apiUrl}/user`, user).pipe(
-      tap(() => this.snackbar.open(`Username: ${user.username} was created!`, 'Close', snackBarConfig)),
+      tap(() => this.snackbar.open(`Username: ${user.username} was created!`, 'Close', snackBarSuccessConfig)),
       catchError(e => {
-        this.snackbar.open(`Error message create user: ${e.error.message}`, 'Close', snackBarConfig);
+        this.snackbar.open(`Error message create user: ${e.error.message}`, 'Close', snackBarErrorConfig);
         return throwError(e);
       })
     );
   }
-
-  public getUser(id: number) {
-    return this.httpClient.get(`${this.apiUrl}/user/${id}`);
-  }
-
+  
 }

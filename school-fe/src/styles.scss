@@ -1,6 +1,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.blue-snackbar{
-  background-color: #c2185b;
+.succsess-snackbar {
+  background-color: #4CAF50;
+}
+
+.error-snackbar {
+  background-color: #FF6E40;
 }

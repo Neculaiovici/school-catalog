@@ -5,6 +5,7 @@ import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
 import { ProfileEntity } from "./entity/profile.entity";
 import * as bcrypt from "bcrypt";
+import { RoleTypeEnum } from "./enum/role.enum";
 
 @Injectable()
 export class UserService { 
@@ -75,6 +76,20 @@ export class UserService {
     const {password, ...result } = user;
 
     return result;
+  }
+
+  public getRoleEnumValue(): Promise<number[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        const roleEnumValues = Object.keys(RoleTypeEnum)
+          .filter(key => !isNaN(Number(RoleTypeEnum[key])))
+          .map(key => Number(RoleTypeEnum[key]));
+  
+        resolve(roleEnumValues);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   public baseQuery(): SelectQueryBuilder<UserEntity> {
