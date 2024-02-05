@@ -2,15 +2,18 @@
   <span>School application</span>
   <span class="example-spacer"></span>
   <div *ngIf="(isLoggedIn$ | async) == true; else loginRegister">
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button mat-icon-button matTooltip="Profile">
+      <a routerLink="profile"><mat-icon>person</mat-icon></a>
+    </button>
+    <button mat-icon-button matTooltip="LogOut">
       <a (click)="onLogout()"><mat-icon>logout</mat-icon></a>
     </button>
   </div>
   <ng-template #loginRegister>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button mat-icon-button matTooltip="Login">
       <a routerLink="auth/login"><mat-icon>login</mat-icon></a>
     </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button matTooltip="SignUp">
       <a routerLink="auth/sign-up"><mat-icon>how_to_reg</mat-icon></a>
     </button>
   </ng-template>
