@@ -28,6 +28,13 @@ export class UserController {
     throw new BadRequestException([`Your account: ${user.username} with role "${RoleTypeEnum[user.role]}" is not allowed!`]);
   }
 
+  @Get('role-enum')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getRoleEnumValues(): Promise<number[]> {
+    return this.userService.getRoleEnumValue();
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)

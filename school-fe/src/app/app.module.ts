@@ -14,13 +14,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptor } from './interceptor/token.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     NavigationComponent,
-    HomeComponent
+    HomeComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
