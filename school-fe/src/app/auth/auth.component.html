@@ -18,7 +18,7 @@
 
     <mat-form-field *ngIf="showRetypePassword" apperance="outline">
       <mat-label>Retype password</mat-label>
-      <input type="text" matInput [formControl]="retypePassword" required />
+      <input type="text" matInput [formControl]="retypedPassword" required />
       <mat-icon matSuffix>person</mat-icon>
     </mat-form-field>
 
@@ -30,13 +30,13 @@
 
     <mat-form-field *ngIf="showFirstName" apperance="outline">
       <mat-label>Firstname</mat-label>
-      <input type="text" matInput [formControl]="firstName" required />
+      <input type="text" matInput [formControl]="firstname" required />
       <mat-icon matSuffix>person</mat-icon>
     </mat-form-field>
 
     <mat-form-field *ngIf="showLastName" apperance="outline">
       <mat-label>LastName</mat-label>
-      <input type="text" matInput [formControl]="lastName" required />
+      <input type="text" matInput [formControl]="lastname" required />
       <mat-icon matSuffix>person</mat-icon>
     </mat-form-field>
 

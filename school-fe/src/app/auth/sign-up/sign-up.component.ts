@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/common/model/user';
+import { UserInterface } from 'src/app/common/model/user.interface';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -17,13 +17,9 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  registerUser(user: User) {
-    // this.authService.login(user).subscribe(() => {
-    //   this.router.navigate([''])
-    // })
-    console.log(user)
+  registerUser(user: UserInterface) {
     this.authService.registerUser(user).subscribe((resp) => {
-      console.log(resp);
+      // TO DO redirect to another page or to home....
     })
   }
 }

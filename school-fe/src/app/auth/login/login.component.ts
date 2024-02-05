@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { User } from 'src/app/common/model/user';
+import { UserInterface } from 'src/app/common/model/user.interface';
 import { AuthComponent } from '../auth.component';
 
 @Component({
@@ -15,7 +14,7 @@ export class LoginComponent implements OnInit {
   public pageLabel: string = "Login page";
   public submitButtonLabel: string = "Login";
 
-  @Output() onSubmitEvent = new EventEmitter<User>();
+  @Output() onSubmitEvent = new EventEmitter<UserInterface>();
   @ViewChild(AuthComponent) authComponent: AuthComponent | undefined;
 
   constructor(
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  login(user: User) {
+  login(user: UserInterface) {
     this.authService.login(user).subscribe(() => {
       this.router.navigate([''])
     })

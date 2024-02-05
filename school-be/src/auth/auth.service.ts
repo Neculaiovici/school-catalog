@@ -42,6 +42,20 @@ export class AuthService {
     
   }
 
+  public async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.userService.getUserByUsername(username);
+
+    if(!user) throw new UnauthorizedException(`User ${username} not found!`);
+
+    if(!(await bcrypt.compare(user.password, pass))) {
+      const {password,username, ...result } = user;
+      return result;
+    }
+    else {
+      throw new UnauthorizedException(`Invalid credential for user ${username}`);
+    }
+  }
+
   public logout(response: Response) {
     response.clearCookie('Authentication')
     response.cookie('Authentication', '', {

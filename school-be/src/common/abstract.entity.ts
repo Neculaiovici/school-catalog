@@ -6,7 +6,7 @@ export class AbstractEntity {
   @Expose()
   id: number;
 
-  @Column()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Expose()
   createdAt: Date;
 }

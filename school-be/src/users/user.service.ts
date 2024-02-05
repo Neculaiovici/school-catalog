@@ -30,8 +30,7 @@ export class UserService {
 
   public async createUser(input: CreateUserDto): Promise<UserEntity | undefined> {
     const user = new UserEntity();
-    user.profile = new ProfileEntity();
-    const currentDateTimeString = new Date();
+    const profile = new ProfileEntity();
 
     if(input.password !== input.retypedPassword) throw new BadRequestException(['Password are not identical!']);
 
@@ -41,17 +40,17 @@ export class UserService {
     const existingEmail = await this.userRepository.findOne({ where: { profile: { email:  input.profile.email }}});
     if(existingEmail) throw new BadRequestException([`Username ${existingUsername.username} is already taken!`]);
 
-    user.createdAt = currentDateTimeString;
     user.username = input.username;
-    user.password = await this.hashPassword(input.password);
+    user.password = await bcrypt.hash(input.password, 10);
     user.role = input.role;
 
-    user.profile.firstName = input.profile.firstName;
-    user.profile.lastName = input.profile.lastName;
-    user.profile.email = input.profile.email;
-    user.profile.age = input.profile.age;
-    user.profile.profileAvatar = input.profile.profileAvatar;
-    user.profile.createdAt = currentDateTimeString;
+    profile.firstname = input.profile.firstname;
+    profile.lastname = input.profile.lastname;
+    profile.email = input.profile.email;
+    profile.age = input.profile.age;
+    profile.profileAvatar = input.profile.profileAvatar;
+    
+    user.profile = profile;
 
     return {
       ...(await this.userRepository.save(user))
