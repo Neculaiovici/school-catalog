@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "14"
+  - "16.14.2"
 
 services:
   - mysql
@@ -21,7 +21,7 @@ before_script:
   - sleep 5
 
 install:
-  - npm install -g pnpm@5.16.0
+  - npm install -g pnpm@8.11.0
   - cd school-be && pnpm install
   - cd ../school-fe && npm install
 
