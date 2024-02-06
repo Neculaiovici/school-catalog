@@ -12,12 +12,12 @@ env:
     - DB_PORT=3306
     - DB_USER=root
     - DB_PASSWORD=password
-    - DB_DATABASE=school-database
+    - DB_DATABASE=school_database
     - APP_URL=mywebsite.com
     - SUPPORT_EMAIL=support@${APP_URL}
 
 before_script:
-  - mysql -e 'CREATE DATABASE school-database;'
+  - mysql -e 'CREATE DATABASE school_database;'
   - sleep 5
 
 install:
