@@ -7,12 +7,12 @@ import { GetUser } from "./user.interceptor";
 
 @Controller('user')
 @SerializeOptions({strategy: 'excludeAll'})
+@UseGuards(JwtAuthGuard)
 export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async findAll() {
     return await this.userService.getAllUsers();
@@ -30,7 +30,6 @@ export class UserController {
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async findOne(@Param('id', ParseIntPipe) userId: number) {
     const user = await this.userService.getUserById(userId);
@@ -47,14 +46,12 @@ export class UserController {
   }
 
   @Patch()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async update() {
 
   }
 
   @Delete()
-  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async delete() {
 
