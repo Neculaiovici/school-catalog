@@ -10,8 +10,6 @@ import JwtAuthGuard  from "./guard/jwt-auth.guard";
 @SerializeOptions({strategy: 'excludeAll'})
 export class AuthController {
 
-  private logger = new Logger(AuthController.name)
-
   constructor(
       private readonly authService: AuthService
     ) {}
