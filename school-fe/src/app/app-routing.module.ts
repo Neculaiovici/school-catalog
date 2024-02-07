@@ -5,9 +5,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },
-  { path: 'home', component: HomeComponent, canActivate: [ AuthGuard ] },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+  { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [ AuthGuard ]  },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

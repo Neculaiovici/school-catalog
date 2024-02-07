@@ -1,0 +1,26 @@
+
+<div class="card">
+  <mat-card *ngIf="profile$ | async as data; else loadingTemplate">
+    <mat-card-header>
+      <mat-card-title>Profile detail</mat-card-title>
+      <mat-card-subtitle class="card__title">{{data.username | titlecase}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="../../../../assets/images/card/user-profile.jpg" alt="user-profile">
+    <mat-card-content class="card__content">
+      <ul class="card__content__list">
+        <li>name: {{data.profile.firstname}} - {{data.profile.lastname}}</li>
+        <li>age: {{data.profile.age}}</li>
+        <li>email: {{data.profile.email}}</li>
+        <li>role: {{data.role}}</li>
+        <li>created at: {{data.createdAt | date}}</li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Update profile</button>
+    </mat-card-actions>
+  </mat-card>
+  <ng-template #loadingTemplate>
+    <mat-spinner class="card__spinner" *ngIf="loading"></mat-spinner>
+  </ng-template>
+</div>
+

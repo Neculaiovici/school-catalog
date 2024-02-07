@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -11,7 +12,10 @@ export class NavigationComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
 
-  constructor(private readonly authService: AuthService) { 
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) { 
     this.isLoggedIn$ = authService.authenticated$;
   }
 
