@@ -5,7 +5,6 @@ import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
 import { ProfileEntity } from "./entity/profile.entity";
 import * as bcrypt from "bcrypt";
-import { RoleTypeEnum } from "./enum/role.enum";
 
 @Injectable()
 export class UserService { 
@@ -14,7 +13,7 @@ export class UserService {
 
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly userRepository: Repository<UserEntity>
   ) {}
 
   public async getAllUsers(): Promise<UserEntity[]> {
@@ -23,6 +22,16 @@ export class UserService {
 
   public async getUserById(userId: number): Promise<UserEntity> {
     return await this.userRepository.findOne({where: {id: userId}});
+  }
+
+  public async getUserWithProfile(userId: number): Promise<UserEntity | undefined> {
+    const user = this.userAndProfileQuery(userId).getOne();
+    if(user) {
+      return user;
+    } 
+    else {
+      throw new Error('Profile not found')
+    }
   }
 
   public async getUserByUsername(userName: string): Promise<UserEntity> {    
@@ -78,29 +87,19 @@ export class UserService {
     return result;
   }
 
-  public getRoleEnumValue(): Promise<number[]> {
-    return new Promise((resolve, reject) => {
-      try {
-        const roleEnumValues = Object.keys(RoleTypeEnum)
-          .filter(key => !isNaN(Number(RoleTypeEnum[key])))
-          .map(key => Number(RoleTypeEnum[key]));
-  
-        resolve(roleEnumValues);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  public baseQuery(): SelectQueryBuilder<UserEntity> {
+  private baseQuery(): SelectQueryBuilder<UserEntity> {
     const userQuery = this.userRepository
       .createQueryBuilder('u')
       .orderBy('u.id', 'ASC')
     return userQuery
   }
 
-  private async hashPassword(password: string): Promise<string> {
-    return await bcrypt.hash(password, 10);
+  private userAndProfileQuery(userId: number): SelectQueryBuilder<UserEntity> {
+    const userQuery = this.userRepository
+      .createQueryBuilder('u')
+      .leftJoinAndSelect('u.profile', 'profile')
+      .where('u.id = :userId', {userId})
+    return userQuery;
   }
 
 }

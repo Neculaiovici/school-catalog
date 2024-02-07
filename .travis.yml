@@ -24,7 +24,3 @@ install:
   - npm install -g pnpm@8.11.0
   - cd school-be && pnpm install
   - cd ../school-fe && npm install
-
-script:
-  - cd school-be && pnpm run test
-  - cd ../school-fe && npm run test

@@ -4,13 +4,14 @@ import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
 import { ProfileEntity } from './entity/profile.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       UserEntity, 
       ProfileEntity
-    ]),
+    ])
   ],
   controllers: [ UserController ],
   providers: [ UserService ]
