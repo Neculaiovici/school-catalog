@@ -5,6 +5,7 @@ import { Observable, Subject, catchError, of, tap, throwError } from "rxjs";
 import { UserInterface } from "../model/user.interface";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { LoginResponseInterface } from "../model/login-response.interface";
+import { AppConfig } from "src/config/config";
 
 export const snackBarSuccessConfig: MatSnackBarConfig = {
   duration: 5500,
@@ -25,7 +26,7 @@ export const snackBarErrorConfig: MatSnackBarConfig = {
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000'
+  private apiUrl:string = AppConfig.apiUrl;
   private readonly authenticated = new Subject<boolean>();
   public authenticated$ = this.authenticated.asObservable();
 
@@ -64,7 +65,7 @@ export class AuthService {
     )
     .subscribe(() => {
       this.authenticated.next(false);
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     });
   }
 

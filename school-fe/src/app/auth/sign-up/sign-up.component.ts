@@ -23,8 +23,7 @@ export class SignUpComponent implements OnInit {
 
   registerUser(user: UserInterface) {
     this.authService.registerUser(user).subscribe(() => {
-      this.router.navigate(['home'])
-      // TO DO redirect to another page or to home....
+      this.router.navigate(['dashboard']);
     })
   }
 }

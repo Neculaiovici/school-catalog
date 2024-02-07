@@ -19,6 +19,7 @@ export class UserController {
   }
 
   @Get('/profile')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async userWithProfile(@GetUser() user) {
     try {
