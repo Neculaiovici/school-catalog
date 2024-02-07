@@ -23,4 +23,40 @@ before_script:
 install:
   - npm install -g pnpm@8.11.0
   - cd school-be && pnpm install
+  - cd ../school-fe && npm installlanguage: node_js
+node_js:
+  - "16.14.2"
+
+services:
+  - mysql
+
+env:
+  global:
+    - DB_TYPE=mysql
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_USER=root
+    - DB_PASSWORD=password
+    - DB_DATABASE=school_database
+    - APP_URL=mywebsite.com
+    - SUPPORT_EMAIL=support@${APP_URL}
+    - SKIP_TESTS=true  # Set this variable to skip tests
+
+before_script:
+  - mysql -e 'CREATE DATABASE school_database;'
+  - sleep 5
+
+install:
+  - npm install -g pnpm@8.11.0
+  - cd school-be && pnpm install
   - cd ../school-fe && npm install
+
+script:
+  - if [ "$SKIP_TESTS" != "true" ]; then
+      cd school-be && pnpm test
+    else
+      echo "Backend tests are skipped.";
+    fi
+
+  - cd ../school-fe
+  - npm run build --production

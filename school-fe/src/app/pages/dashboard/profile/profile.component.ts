@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { Observable } from 'rxjs';
+import { RoleEnum } from 'src/app/enum/role.enum';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ export class ProfileComponent implements OnInit {
 
   profile$!: Observable<any>;
   loading: boolean = true;
+  RoleEnum = RoleEnum;
 
   constructor(private readonly dashboardService: DashboardService) { }
 
@@ -27,6 +29,10 @@ export class ProfileComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  getRoleName(role: number): string {
+    return RoleEnum[role];
   }
 
 }

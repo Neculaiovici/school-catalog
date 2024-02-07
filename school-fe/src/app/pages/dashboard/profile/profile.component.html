@@ -11,7 +11,7 @@
         <li>name: {{data.profile.firstname}} - {{data.profile.lastname}}</li>
         <li>age: {{data.profile.age}}</li>
         <li>email: {{data.profile.email}}</li>
-        <li>role: {{data.role}}</li>
+        <li>role: {{getRoleName(data.role)}}</li>
         <li>created at: {{data.createdAt | date}}</li>
       </ul>
     </mat-card-content>
