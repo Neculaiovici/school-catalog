@@ -1,5 +1,5 @@
 import { IsDate, IsEnum, IsNotEmpty, IsString, Length, ValidateNested } from "class-validator";
-import { ProfileEntity } from "../entity/profile.entity";
+import { ProfileEntity } from "../../profile/entity/profile.entity";
 import { RoleTypeEnum } from "../enum/role.enum";
 import { Type } from "class-transformer";
 

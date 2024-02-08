@@ -1,7 +1,7 @@
 # School-management Application
 
 <p align="center">
-  <a href="https://github.com/Neculaiovici" target="blank"><img src="https://app.travis-ci.com/Neculaiovici/school-management.svg?branch=main" width="50" alt="Nestjs Logo" /></a>
+  <a href="https://github.com/Neculaiovici" target="blank"><img src="https://app.travis-ci.com/Neculaiovici/school-management.svg?branch=main" width="100" alt="Nestjs Logo" /></a>
 </p>
 
 ### Description

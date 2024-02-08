@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Expose } from 'class-transformer';
-import { ProfileEntity } from "./profile.entity";
+import { ProfileEntity } from "../../profile/entity/profile.entity";
 import { AbstractEntity } from "src/common/abstract.entity";
 import { RoleTypeEnum } from "../enum/role.enum";
 import { ClassroomEntity } from "src/classroom/entity/classroom.entity";

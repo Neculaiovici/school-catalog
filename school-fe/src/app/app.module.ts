@@ -32,9 +32,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatToolbarModule, MatButtonModule, MatIconModule, MatSnackBarModule, MatTooltipModule
+    MatToolbarModule, MatButtonModule, MatIconModule, MatSnackBarModule, MatTooltipModule,
   ],
-  providers: [ [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}] ],
+  providers: [ 
+    [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
