@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { ClassroomEntity } from "src/classroom/entity/classroom.entity";
 import { CourseEntity } from "src/classroom/entity/course.entity";
 import { GradeEntity } from "src/classroom/entity/grade.entity";
-import { ProfileEntity } from "src/users/entity/profile.entity";
+import { ProfileEntity } from "src/profile/entity/profile.entity";
 import { UserEntity } from "src/users/entity/user.entity";
 
 export default registerAs('orm.config', (): TypeOrmModuleOptions => ({

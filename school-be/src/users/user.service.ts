@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "./entity/user.entity";
 import { Repository, SelectQueryBuilder } from "typeorm";
 import { CreateUserDto } from "./input/create-user.dto";
-import { ProfileEntity } from "./entity/profile.entity";
+import { ProfileEntity } from "../profile/entity/profile.entity";
 import * as bcrypt from "bcrypt";
+import { UpdateUserDto } from "./input/update-user.dto";
 
 @Injectable()
 export class UserService { 
@@ -13,7 +14,9 @@ export class UserService {
 
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>
+    private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(ProfileEntity)
+    private readonly profileRepository: Repository<ProfileEntity>
   ) {}
 
   public async getAllUsers(): Promise<UserEntity[]> {
@@ -67,24 +70,13 @@ export class UserService {
     }
   }
 
-  public async updateUser(): Promise<UserEntity> {
-    return ;
-  }
+  public async updateUserPassword(userDto: UpdateUserDto, password: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({where: {username: userDto.username}});
+    if(!user) throw new BadRequestException('User not found!');
 
-  public async deleteUser(): Promise<UserEntity> {
-    return ;
-  }
+    user.password = await bcrypt.hash(password, 10);
 
-  public async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userRepository.findOne({where: {username: username}});
-
-    if(!user) throw new UnauthorizedException(`User ${username} not found!`);
-
-    if(!(await bcrypt.compare(pass, user.password))) throw new UnauthorizedException(`Invalid credential for user ${username}`);
-
-    const {password, ...result } = user;
-
-    return result;
+    return await this.userRepository.save(user);
   }
 
   private baseQuery(): SelectQueryBuilder<UserEntity> {

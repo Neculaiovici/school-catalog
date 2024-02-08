@@ -4,15 +4,16 @@ import { CreateUserDto } from "./input/create-user.dto";
 import JwtAuthGuard from "src/auth/guard/jwt-auth.guard";
 import { RoleTypeEnum } from "./enum/role.enum";
 import { GetUser } from "./user.interceptor";
+import { UpdateUserDto } from "./input/update-user.dto";
 
 @Controller('user')
 @SerializeOptions({strategy: 'excludeAll'})
-@UseGuards(JwtAuthGuard)
 export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async findAll() {
     return await this.userService.getAllUsers();
@@ -30,6 +31,7 @@ export class UserController {
   }
 
   @Get('/:id')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async findOne(@Param('id', ParseIntPipe) userId: number) {
     const user = await this.userService.getUserById(userId);
@@ -45,10 +47,11 @@ export class UserController {
     return await this.userService.createUser(input)
   }
 
-  @Patch()
+  @Patch('/update-password')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  async update() {
-
+  async update(@GetUser() user, @Body('password') password: string) {
+    return await this.userService.updateUserPassword(user.id, password);
   }
 
   @Delete()

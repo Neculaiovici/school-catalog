@@ -41,6 +41,7 @@ env:
     - APP_URL=mywebsite.com
     - SUPPORT_EMAIL=support@${APP_URL}
     - SKIP_TESTS=true  # Set this variable to skip tests
+    - COVERALLS_REPO_TOKEN=ZhVYzxqsERaFiwhlS3CQqBQ1NvG4i1rVa # code coverage
 
 before_script:
   - mysql -e 'CREATE DATABASE school_database;'
@@ -48,8 +49,8 @@ before_script:
 
 install:
   - npm install -g pnpm@8.11.0
-  - cd school-be && pnpm install
-  - cd ../school-fe && npm install
+  - cd school-be && pnpm install && pnpm install --save-dev nyc coveralls
+  - cd ../school-fe && npm install && pnpm install --save-dev nyc coveralls
 
 script:
   - if [ "$SKIP_TESTS" != "true" ]; then
@@ -60,3 +61,5 @@ script:
 
   - cd ../school-fe
   - npm run build --production
+after_success:
+  - npm run coverage

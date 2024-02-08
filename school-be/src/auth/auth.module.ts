@@ -10,12 +10,13 @@ import { JwtStrategy } from "./strategy/jwt.strategy";
 import { UserService } from "src/users/user.service";
 import { UserModule } from "src/users/user.module";
 import { PassportModule } from "@nestjs/passport";
+import { ProfileEntity } from "src/profile/entity/profile.entity";
 
 @Module({
   imports: [
     PassportModule,
     UserModule,
-    TypeOrmModule.forFeature([ UserEntity ]),
+    TypeOrmModule.forFeature([ UserEntity, ProfileEntity ]),
     JwtModule.registerAsync({
       useFactory: ((configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),

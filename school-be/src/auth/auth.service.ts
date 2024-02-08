@@ -18,7 +18,9 @@ export class AuthService {
   public async login(user: UserEntity, response: Response) {
     try {
       const userObject = await this.userService.getUserByUsername(user.username);
-    
+
+      await this.validateUser(userObject.username, user.password);
+
       const tokenPayload: TokenPayload = {
         sub: userObject.id,
         name: userObject.username
@@ -36,8 +38,7 @@ export class AuthService {
         sameSite: 'none'
       })
     } catch(error) {
-      console.error('Eroare la utentificare ', error.message);
-      throw new UnauthorizedException('Autentificare eșuată. Verificați datele de autentificare.')
+      throw new UnauthorizedException('Eroare la utentificare ', error.message)
     }
     
   }
@@ -47,10 +48,12 @@ export class AuthService {
 
     if(!user) throw new UnauthorizedException(`User ${username} not found!`);
 
-    if(!(await bcrypt.compare(user.password, pass))) {
-      const {password,username, ...result } = user;
+    const isPasswordValid = await bcrypt.compare(pass, user.password);
+
+    if (isPasswordValid) {
+      const { password, ...result } = user;
       return result;
-    }
+    } 
     else {
       throw new UnauthorizedException(`Invalid credential for user ${username}`);
     }
