@@ -17,6 +17,11 @@ export class DialogOverviewComponent {
   public name: string = "";
   public hide = true;
   public password = new FormControl('', [Validators.required]);
+  public firstname = new FormControl('', [Validators.required]);
+  public lastname = new FormControl('', [Validators.required]);
+  public email = new FormControl('', [Validators.required]);
+  public age = new FormControl('', [Validators.required]);
+  public profileAvatar = new FormControl('', [Validators.required]);
 
   constructor(public readonly dialog: MatDialog) {}
 }
