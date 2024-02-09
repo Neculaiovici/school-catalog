@@ -16,12 +16,11 @@
       </ul>
     </mat-card-content>
     <mat-card-actions class="card-action">
-      <button mat-raised-button (click)="openDialog()" color="primary">Update password</button>
-      <button mat-raised-button (click)="openDialog()" color="primary">Update profile</button>
+      <button mat-raised-button (click)="updatePassword()" color="primary">Update password</button>
+      <button mat-raised-button (click)="updateProfile()" color="primary">Update profile</button>
     </mat-card-actions>
   </mat-card>
   <ng-template #loadingTemplate>
     <mat-spinner class="card__spinner" *ngIf="loading"></mat-spinner>
   </ng-template>
 </div>
-

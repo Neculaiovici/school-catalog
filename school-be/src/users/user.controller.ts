@@ -47,10 +47,10 @@ export class UserController {
     return await this.userService.createUser(input)
   }
 
-  @Patch('/update-password')
+  @Patch('/change-password')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  async update(@GetUser() user, @Body('password') password: string) {
+  async changePassword(@GetUser() user, @Body('password') password: string) {
     return await this.userService.updateUserPassword(user.id, password);
   }
 

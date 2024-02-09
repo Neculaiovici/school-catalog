@@ -1,13 +1,45 @@
-<h2 mat-dialog-title>Update password</h2>
-<div mat-dialog-content>
-  <mat-form-field apperance="outline">
-    <mat-label>Password</mat-label>
-    <input [type]="hide ? 'password' : 'text'" matInput formControl="password" required />
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    <!-- <mat-error *ngIf="password.invalid"> {{ getPasswordErrorMessage() }} </mat-error> -->
-  </mat-form-field>
-</div>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Confirm</button>
-</mat-dialog-actions>
+<form [formGroup]="updateForm">
+  <h2 mat-dialog-title>{{data.title}}</h2> 
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" *ngIf="data.shwoPassword">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" required />
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="data.showFirstName">
+      <mat-label>Firstname</mat-label>
+      <input type="text" matInput formControlName="firstname" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="data.showLastName">
+      <mat-label>Lastname</mat-label>
+      <input type="text" matInput formControlName="lastname" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="data.showEmail">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="data.showAge">
+      <mat-label>Age</mat-label>
+      <input type="number" matInput formControlName="age" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" *ngIf="data.showProfileAvatar">
+      <mat-label>Profile avatar</mat-label>
+      <input type="test" matInput formControlName="profileAvatar" required />
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+    
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit()">Confirm</button>
+  </mat-dialog-actions>
+</form>

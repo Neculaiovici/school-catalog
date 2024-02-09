@@ -18,7 +18,7 @@ export class DashboardService {
   }
 
   public updatePassword(password: string): Observable<UserInterface> {
-    return this.httpClient.patch<UserInterface>(`${this.url}/user/update-password`, password);
+    return this.httpClient.patch<UserInterface>(`${this.url}/user/change-password`, password);
   }
 
 }
