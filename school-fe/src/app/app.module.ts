@@ -25,7 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FooterComponent,
     NavigationComponent,
     HomeComponent,
-    LandingPageComponent
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,

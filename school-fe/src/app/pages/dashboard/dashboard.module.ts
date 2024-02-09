@@ -13,6 +13,7 @@ import { DialogOverviewComponent } from './profile/dialog-overview/dialog-overvi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,10 +25,12 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     DashboardRoutingModule,
+    ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule, 
     MatFormFieldModule, MatInputModule, MatIconModule
   ],
-  providers: [[{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}]],
+  exports: [ DialogOverviewComponent ],
+  //providers: [[{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}]],
   entryComponents: [MatDialogModule]
 })
 export class DashboardModule { }
