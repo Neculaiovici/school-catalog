@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ProfileInterface } from "src/app/model/profile.interface";
 import { UserInterface } from "src/app/model/user.interface";
 import { DashboardService } from "../../dashboard.service";
+import { EventService } from "../event.service";
 
 export interface DialogData {
   shwoPassword?: boolean;
@@ -29,7 +30,8 @@ export class DialogOverviewComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private readonly dashboardService: DashboardService) {
+    private readonly dashboardService: DashboardService,
+    private readonly eventService: EventService) {
     this.updateForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
       firstname: new FormControl('', [Validators.required]),
@@ -41,11 +43,23 @@ export class DialogOverviewComponent {
   }
 
   public onSubmit() {
-    // debugger;
-    // this.onSubmitEvent.emit(this.updateForm.value);
-    const passwordFormControl = this.updateForm.get('password')?.value;
-    if(passwordFormControl){
-      this.dashboardService.updatePassword(this.updateForm.value).subscribe(resp => console.log(resp))
+    // const passwordFormControl = this.updateForm.get('password')?.value;
+    // console.log(this.data.shwoPassword);
+    if(this.data.shwoPassword){
+      this.dashboardService.updatePassword(this.updateForm.value).subscribe();
+    }
+    else {
+      const requestData: { [key: string]: any } = {};
+
+      Object.keys(this.updateForm.controls).forEach(key => {
+        const control = this.updateForm.get(key);
+        if (control && control.value !== '') {
+          requestData[key] = control.value;
+        }
+      });
+      this.dashboardService.updateProfile(requestData).subscribe(() => {
+        this.eventService.triggerUpdateProfileComponent();
+      });
     }
     
   }

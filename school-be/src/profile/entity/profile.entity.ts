@@ -1,6 +1,7 @@
 import { Expose } from "class-transformer";
 import { AbstractEntity } from "src/common/abstract.entity";
-import { Column, Entity } from "typeorm";
+import { UserEntity } from "src/users/entity/user.entity";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 @Entity('profile')
 export class ProfileEntity extends AbstractEntity {

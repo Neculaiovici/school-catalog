@@ -5,6 +5,7 @@ import { RoleEnum } from 'src/app/enum/role.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOverviewComponent } from './dialog-overview/dialog-overview.component';
 import { config } from 'process';
+import { EventService } from './event.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +20,16 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private readonly dashboardService: DashboardService,
+    private readonly eventService: EventService,
     public readonly dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
     this.profile$ = this.dashboardService.getProfile();
+    this.eventService.updateProfile$.subscribe(() => {
+      this.profile$ = this.dashboardService.getProfile();
+    });
+
     // TO DO modify this spinner it's not ok
     this.profile$.subscribe({
       next: (profile) => { },

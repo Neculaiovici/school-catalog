@@ -51,7 +51,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   async changePassword(@GetUser() user, @Body('password') password: string) {
-    return await this.userService.updateUserPassword(user.id, password);
+    return await this.userService.updateUserPassword(user, password);
   }
 
   @Delete()

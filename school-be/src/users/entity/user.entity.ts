@@ -24,7 +24,7 @@ export class UserEntity extends AbstractEntity {
   role: RoleTypeEnum;
 
   @OneToOne(() => ProfileEntity, { nullable: true, cascade: true })
-  @JoinColumn()
+  @JoinColumn({name: 'profileId'})
   @Expose()
   profile: ProfileEntity;
 

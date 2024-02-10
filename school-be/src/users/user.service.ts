@@ -71,7 +71,7 @@ export class UserService {
   }
 
   public async updateUserPassword(userDto: UpdateUserDto, password: string): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({where: {username: userDto.username}});
+    const user = await this.getUserByUsername(userDto.username);
     if(!user) throw new BadRequestException('User not found!');
 
     user.password = await bcrypt.hash(password, 10);
