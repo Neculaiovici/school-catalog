@@ -1,6 +1,6 @@
 <form [formGroup]="updateForm">
   <h2 mat-dialog-title>{{data.title}}</h2> 
-  <div mat-dialog-content>
+  <div mat-dialog-content style="display: flex; flex-direction: column;">
     <mat-form-field appearance="outline" *ngIf="data.shwoPassword">
       <mat-label>Password</mat-label>
       <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" required />

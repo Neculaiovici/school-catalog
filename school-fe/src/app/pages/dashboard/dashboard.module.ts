@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardRoutingModule,
     ReactiveFormsModule,
     MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatDialogModule, 
-    MatFormFieldModule, MatInputModule, MatIconModule
+    MatFormFieldModule, MatInputModule, MatIconModule, MatSnackBarModule
   ],
   exports: [ DialogOverviewComponent ],
   //providers: [[{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}]],

@@ -4,6 +4,7 @@ import { ProfileService } from './profile.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entity/user.entity';
 import { ProfileEntity } from './entity/profile.entity';
+import { UserService } from 'src/users/user.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { ProfileEntity } from './entity/profile.entity';
     ])
   ],
   controllers: [ProfileController],
-  providers: [ProfileService]
+  providers: [ProfileService, UserService]
 })
 export class ProfileModule {}
