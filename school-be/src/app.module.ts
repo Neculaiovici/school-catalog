@@ -9,6 +9,7 @@ import ormConfigProd from './config/orm.config.prod';
 import { AuthModule } from './auth/auth.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { ProfileModule } from './profile/profile.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ProfileModule } from './profile/profile.module';
     UserModule,
     AuthModule,
     ClassroomModule,
-    ProfileModule
+    ProfileModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

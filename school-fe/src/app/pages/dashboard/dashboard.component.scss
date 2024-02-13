@@ -1,6 +1,13 @@
 .container{
   display: flex;
   flex-direction: row;
-  flex-flow: row wrap;
+  
   padding: 20px;
+  &__organizer {
+    display: inherit;
+    flex-direction: row;
+    flex-flow: wrap;
+    align-items: baseline;
+    margin: 50px;
+  }
 }

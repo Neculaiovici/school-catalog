@@ -6,13 +6,15 @@ import { TokenPayload } from "./interface/token-payload.interface";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "src/users/user.service";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly configService: ConfigService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly mailService: MailService
   ) {}
 
   public async login(user: UserEntity, response: Response) {
@@ -20,6 +22,10 @@ export class AuthService {
       const userObject = await this.userService.getUserByUsername(user.username);
 
       await this.validateUser(userObject.username, user.password);
+
+      const profile = await this.userService.getUserWithProfile(userObject.id)
+
+      const email = profile.profile.email
 
       const tokenPayload: TokenPayload = {
         sub: userObject.id,
@@ -37,6 +43,9 @@ export class AuthService {
         expires,
         sameSite: 'none'
       })
+
+      //await this.mailService.sendUserConfirmation(email, "token");
+
     } catch(error) {
       throw new UnauthorizedException('Eroare la utentificare ', error.message)
     }
