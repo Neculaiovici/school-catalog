@@ -11,11 +11,13 @@ import { UserService } from "src/users/user.service";
 import { UserModule } from "src/users/user.module";
 import { PassportModule } from "@nestjs/passport";
 import { ProfileEntity } from "src/profile/entity/profile.entity";
+import { MailModule } from "src/mail/mail.module";
 
 @Module({
   imports: [
     PassportModule,
     UserModule,
+    MailModule,
     TypeOrmModule.forFeature([ UserEntity, ProfileEntity ]),
     JwtModule.registerAsync({
       useFactory: ((configService: ConfigService) => ({
